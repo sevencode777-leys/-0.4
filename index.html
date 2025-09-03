@@ -1,0 +1,757 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>رفيق 0.4 - المساعد الإسلامي الذكي</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1e7e34">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="رفيق 0.4">
+</head>
+<body>
+    <!-- Header -->
+    <header class="app-header">
+        <div class="header-content">
+            <h1 class="app-title">
+                <i class="fas fa-mosque"></i>
+                رفيق 0.4
+            </h1>
+            <div class="header-controls">
+                <button id="theme-toggle" class="btn-icon" title="تبديل الوضع المظلم">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button id="settings-btn" class="btn-icon" title="الإعدادات">
+                    <i class="fas fa-cog"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <button class="nav-btn active" data-section="dashboard">
+                <i class="fas fa-home"></i>
+                <span>الرئيسية</span>
+            </button>
+            <button class="nav-btn" data-section="quran">
+                <i class="fas fa-book-open"></i>
+                <span>القرآن الكريم</span>
+            </button>
+            <button class="nav-btn" data-section="hadith">
+                <i class="fas fa-scroll"></i>
+                <span>الأحاديث</span>
+            </button>
+            <button class="nav-btn" data-section="prayer">
+                <i class="fas fa-pray"></i>
+                <span>أوقات الصلاة</span>
+            </button>
+            <button class="nav-btn" data-section="adhkar">
+                <i class="fas fa-hands"></i>
+                <span>الأذكار</span>
+            </button>
+            <button class="nav-btn" data-section="memorization">
+                <i class="fas fa-brain"></i>
+                <span>الحفظ</span>
+            </button>
+            <button class="nav-btn" data-section="ar-qibla">
+                <i class="fas fa-camera"></i>
+                <span>AR القبلة</span>
+            </button>
+            <button class="nav-btn" data-section="voice-notes">
+                <i class="fas fa-microphone"></i>
+                <span>المذكرات</span>
+            </button>
+            <button class="nav-btn" data-section="competitions">
+                <i class="fas fa-trophy"></i>
+                <span>المسابقات</span>
+            </button>
+            <button class="nav-btn" data-section="zakat">
+                <i class="fas fa-hand-holding-heart"></i>
+                <span>الزكاة</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="content-section active">
+            <div class="welcome-card">
+                <h2>أهلاً بك في رفيق - الإصدار 0.4 🕌</h2>
+                <p>مساعدك الإسلامي الذكي للقرآن والأحاديث والأذكار</p>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="dashboard-card">
+                    <div class="card-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>الصلاة القادمة</h3>
+                    <div id="next-prayer">
+                        <span class="prayer-name">المغرب</span>
+                        <span class="prayer-time">17:30</span>
+                        <span class="time-remaining">باقي ساعتان و 15 دقيقة</span>
+                    </div>
+                </div>
+
+                <div class="dashboard-card">
+                    <div class="card-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3>تقدم الحفظ</h3>
+                    <div class="progress-info">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 35%"></div>
+                        </div>
+                        <span>5 من 30 جزء</span>
+                    </div>
+                </div>
+
+                <div class="dashboard-card">
+                    <div class="card-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <h3>مراجعات اليوم</h3>
+                    <div class="review-info">
+                        <span class="review-count">12</span>
+                        <span>آية للمراجعة</span>
+                    </div>
+                </div>
+
+                <div class="dashboard-card">
+                    <div class="card-icon">
+                        <i class="fas fa-compass"></i>
+                    </div>
+                    <h3>اتجاه القبلة</h3>
+                    <div class="qibla-info">
+                        <div class="compass">
+                            <div class="compass-needle"></div>
+                        </div>
+                        <span>شمال شرق</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Assistant -->
+            <div class="ai-assistant">
+                <div class="assistant-header">
+                    <h3><i class="fas fa-robot"></i> المساعد الذكي</h3>
+                    <button id="voice-btn" class="btn-voice">
+                        <i class="fas fa-microphone"></i>
+                    </button>
+                </div>
+                <div class="chat-container" id="chat-container">
+                    <div class="assistant-message">
+                        السلام عليكم! كيف يمكنني مساعدتك اليوم؟ يمكنك سؤالي عن أي شيء متعلق بالقرآن أو الأحاديث أو الأذكار.
+                    </div>
+                </div>
+                <div class="chat-input-container">
+                    <input type="text" id="chat-input" placeholder="اكتب سؤالك هنا..." />
+                    <button id="send-btn" class="btn-send">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quran Section -->
+        <section id="quran" class="content-section">
+            <div class="section-header">
+                <h2>القرآن الكريم</h2>
+                <div class="quran-controls">
+                    <select id="reciter-select">
+                        <option value="mishary">مشاري العفاسي</option>
+                        <option value="sudais">عبد الرحمن السديس</option>
+                        <option value="minshawi">محمد صديق المنشاوي</option>
+                    </select>
+                    <button id="font-size-btn" class="btn-icon">
+                        <i class="fas fa-text-height"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="quran-navigation">
+                <div class="surah-selector">
+                    <select id="surah-select">
+                        <option value="1">الفاتحة</option>
+                        <option value="2">البقرة</option>
+                        <option value="3">آل عمران</option>
+                        <!-- سيتم إضافة باقي السور بالجافاسكريبت -->
+                    </select>
+                </div>
+                <div class="page-controls">
+                    <button id="prev-page" class="btn-nav">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                    <span id="page-info">صفحة 1 من 604</span>
+                    <button id="next-page" class="btn-nav">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="quran-viewer">
+                <div class="audio-controls">
+                    <button id="play-pause" class="btn-audio">
+                        <i class="fas fa-play"></i>
+                    </button>
+                    <button id="repeat-btn" class="btn-audio">
+                        <i class="fas fa-repeat"></i>
+                    </button>
+                    <div class="speed-control">
+                        <label>السرعة:</label>
+                        <input type="range" id="speed-slider" min="0.5" max="2" step="0.1" value="1">
+                        <span id="speed-value">1x</span>
+                    </div>
+                </div>
+
+                <div class="quran-text" id="quran-text">
+                    <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+                    <div class="verse" data-verse="1">
+                        <span class="verse-text">الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ</span>
+                        <span class="verse-number">﴿١﴾</span>
+                    </div>
+                    <div class="verse" data-verse="2">
+                        <span class="verse-text">الرَّحْمَٰنِ الرَّحِيمِ</span>
+                        <span class="verse-number">﴿٢﴾</span>
+                    </div>
+                    <!-- سيتم تحميل النصوص الفعلية بالجافاسكريبت -->
+                </div>
+
+                <div class="translation" id="translation">
+                    <h4>الترجمة:</h4>
+                    <p>الحمد لله رب العالمين، الرحمن الرحيم...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hadith Section -->
+        <section id="hadith" class="content-section">
+            <div class="section-header">
+                <h2>الأحاديث النبوية</h2>
+                <div class="hadith-filters">
+                    <select id="book-select">
+                        <option value="bukhari">صحيح البخاري</option>
+                        <option value="muslim">صحيح مسلم</option>
+                        <option value="tirmidhi">جامع الترمذي</option>
+                        <option value="abudawud">سنن أبي داود</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="search-container">
+                <input type="text" id="hadith-search" placeholder="ابحث في الأحاديث..." />
+                <button id="hadith-search-btn" class="btn-search">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+
+            <div class="hadith-results" id="hadith-results">
+                <div class="hadith-card">
+                    <div class="hadith-header">
+                        <span class="hadith-source">صحيح البخاري - كتاب الإيمان</span>
+                        <span class="hadith-grade grade-sahih">صحيح</span>
+                    </div>
+                    <div class="hadith-text">
+                        عن عمر بن الخطاب رضي الله عنه قال: سمعت رسول الله صلى الله عليه وسلم يقول: "إنما الأعمال بالنيات، وإنما لكل امرئ ما نوى..."
+                    </div>
+                    <div class="hadith-footer">
+                        <button class="btn-bookmark">
+                            <i class="far fa-bookmark"></i>
+                        </button>
+                        <button class="btn-share">
+                            <i class="fas fa-share"></i>
+                        </button>
+                        <button class="btn-audio">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Prayer Times Section -->
+        <section id="prayer" class="content-section">
+            <div class="section-header">
+                <h2>أوقات الصلاة</h2>
+                <button id="location-btn" class="btn-location">
+                    <i class="fas fa-map-marker-alt"></i>
+                    تحديد الموقع
+                </button>
+            </div>
+
+            <div class="prayer-times-container">
+                <div class="prayer-time-card">
+                    <div class="prayer-name">الفجر</div>
+                    <div class="prayer-time">04:45</div>
+                    <div class="prayer-status">تمت</div>
+                </div>
+                <div class="prayer-time-card">
+                    <div class="prayer-name">الشروق</div>
+                    <div class="prayer-time">06:15</div>
+                    <div class="prayer-status">تمت</div>
+                </div>
+                <div class="prayer-time-card">
+                    <div class="prayer-name">الظهر</div>
+                    <div class="prayer-time">12:30</div>
+                    <div class="prayer-status">تمت</div>
+                </div>
+                <div class="prayer-time-card">
+                    <div class="prayer-name">العصر</div>
+                    <div class="prayer-time">15:45</div>
+                    <div class="prayer-status">تمت</div>
+                </div>
+                <div class="prayer-time-card next-prayer">
+                    <div class="prayer-name">المغرب</div>
+                    <div class="prayer-time">17:30</div>
+                    <div class="prayer-status">القادمة</div>
+                </div>
+                <div class="prayer-time-card">
+                    <div class="prayer-name">العشاء</div>
+                    <div class="prayer-time">19:00</div>
+                    <div class="prayer-status">لم تحن</div>
+                </div>
+            </div>
+
+            <div class="qibla-compass">
+                <h3>اتجاه القبلة</h3>
+                <div class="compass-container">
+                    <div class="compass-circle">
+                        <div class="compass-arrow"></div>
+                        <div class="compass-directions">
+                            <span class="direction north">ش</span>
+                            <span class="direction east">ق</span>
+                            <span class="direction south">ج</span>
+                            <span class="direction west">غ</span>
+                        </div>
+                    </div>
+                    <div class="qibla-info">
+                        <p>الاتجاه: <strong>شمال شرق (45°)</strong></p>
+                        <p>المسافة إلى مكة: <strong>1,245 كم</strong></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Adhkar Section -->
+        <section id="adhkar" class="content-section">
+            <div class="section-header">
+                <h2>الأذكار والتسبيح</h2>
+                <div class="adhkar-filters">
+                    <button class="filter-btn active" data-filter="morning">أذكار الصباح</button>
+                    <button class="filter-btn" data-filter="evening">أذكار المساء</button>
+                    <button class="filter-btn" data-filter="sleep">أذكار النوم</button>
+                    <button class="filter-btn" data-filter="prayer">أذكار الصلاة</button>
+                </div>
+            </div>
+
+            <div class="tasbih-counter">
+                <h3>المسبحة الرقمية</h3>
+                <div class="counter-display">
+                    <div class="count-number" id="count-number">0</div>
+                    <div class="counter-controls">
+                        <button id="counter-btn" class="btn-counter">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                        <button id="reset-btn" class="btn-reset">
+                            <i class="fas fa-undo"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="tasbih-options">
+                    <button class="tasbih-preset" data-dhikr="سبحان الله">سبحان الله</button>
+                    <button class="tasbih-preset" data-dhikr="الحمد لله">الحمد لله</button>
+                    <button class="tasbih-preset" data-dhikr="الله أكبر">الله أكبر</button>
+                    <button class="tasbih-preset" data-dhikr="لا إله إلا الله">لا إله إلا الله</button>
+                </div>
+            </div>
+
+            <div class="adhkar-list" id="adhkar-list">
+                <div class="dhikr-card">
+                    <div class="dhikr-arabic">
+                        أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ، لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ
+                    </div>
+                    <div class="dhikr-translation">
+                        أصبحنا وأصبح الملك لله، والحمد لله، لا إله إلا الله وحده لا شريك له...
+                    </div>
+                    <div class="dhikr-repeat">
+                        <span>العدد: مرة واحدة</span>
+                        <button class="btn-audio">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AR Qibla Section -->
+        <section id="ar-qibla" class="content-section">
+            <div class="section-header">
+                <h2>القبلة بالواقع المعزز</h2>
+                <button id="start-ar-btn" class="btn-primary">
+                    <i class="fas fa-camera"></i>
+                    تشغيل الكاميرا
+                </button>
+            </div>
+            <div class="ar-container">
+                <video id="ar-video" width="100%" height="400" autoplay style="display: none;"></video>
+                <canvas id="ar-canvas" width="100%" height="400"></canvas>
+                <div class="ar-overlay">
+                    <div class="qibla-indicator">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>الكعبة المشرفة</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Voice Notes Section -->
+        <section id="voice-notes" class="content-section">
+            <div class="section-header">
+                <h2>المذكرات الصوتية</h2>
+                <button id="new-note-btn" class="btn-primary">
+                    <i class="fas fa-microphone"></i>
+                    مذكرة جديدة
+                </button>
+            </div>
+            <div class="voice-notes-container">
+                <div class="record-section" id="record-section" style="display: none;">
+                    <h3>تسجيل مذكرة جديدة</h3>
+                    <div class="record-controls">
+                        <button id="start-record" class="btn-record">
+                            <i class="fas fa-microphone"></i>
+                            ابدأ التسجيل
+                        </button>
+                        <button id="stop-record" class="btn-stop" disabled>
+                            <i class="fas fa-stop"></i>
+                            إيقاف
+                        </button>
+                        <div class="record-timer">00:00</div>
+                    </div>
+                    <input type="text" id="note-title" placeholder="عنوان المذكرة..." class="note-title-input">
+                </div>
+                <div class="notes-list" id="notes-list"></div>
+            </div>
+        </section>
+
+        <!-- Competitions Section -->
+        <section id="competitions" class="content-section">
+            <div class="section-header">
+                <h2>المسابقات والتحديات</h2>
+                <button id="join-competition-btn" class="btn-primary">
+                    <i class="fas fa-trophy"></i>
+                    انضم للمسابقة
+                </button>
+            </div>
+            
+            <div class="competition-info">
+                <div class="current-competition">
+                    <h3>مسابقة هذا الأسبوع</h3>
+                    <div class="competition-card">
+                        <div class="competition-title">حفظ سورة يس</div>
+                        <div class="competition-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 45%"></div>
+                            </div>
+                            <span>45% مكتمل</span>
+                        </div>
+                        <div class="competition-time">باقي 3 أيام</div>
+                    </div>
+                </div>
+                
+                <div class="leaderboard">
+                    <h3>لوحة المتصدرين</h3>
+                    <div class="leaderboard-list">
+                        <div class="leaderboard-item">
+                            <div class="rank">1</div>
+                            <div class="user-info">
+                                <div class="username">محمد الأحمد</div>
+                                <div class="score">950 نقطة</div>
+                            </div>
+                            <div class="badge">🏆</div>
+                        </div>
+                        <div class="leaderboard-item">
+                            <div class="rank">2</div>
+                            <div class="user-info">
+                                <div class="username">فاطمة السيد</div>
+                                <div class="score">890 نقطة</div>
+                            </div>
+                            <div class="badge">🥈</div>
+                        </div>
+                        <div class="leaderboard-item current-user">
+                            <div class="rank">7</div>
+                            <div class="user-info">
+                                <div class="username">أنت</div>
+                                <div class="score">720 نقطة</div>
+                            </div>
+                            <div class="badge">⭐</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Zakat Calculator Section -->
+        <section id="zakat" class="content-section">
+            <div class="section-header">
+                <h2>حاسبة الزكاة</h2>
+                <button id="zakat-help-btn" class="btn-icon">
+                    <i class="fas fa-question-circle"></i>
+                </button>
+            </div>
+            
+            <div class="zakat-calculator">
+                <div class="zakat-form">
+                    <h3>احسب زكاتك</h3>
+                    <div class="input-group">
+                        <label>المبلغ النقدي (ريال)</label>
+                        <input type="number" id="cash-amount" placeholder="0">
+                    </div>
+                    <div class="input-group">
+                        <label>الذهب (جرام)</label>
+                        <input type="number" id="gold-amount" placeholder="0">
+                    </div>
+                    <div class="input-group">
+                        <label>الفضة (جرام)</label>
+                        <input type="number" id="silver-amount" placeholder="0">
+                    </div>
+                    <div class="input-group">
+                        <label>الأسهم والاستثمارات</label>
+                        <input type="number" id="stocks-amount" placeholder="0">
+                    </div>
+                    <button id="calculate-zakat" class="btn-primary">
+                        <i class="fas fa-calculator"></i>
+                        احسب الزكاة
+                    </button>
+                </div>
+                
+                <div class="zakat-result" id="zakat-result" style="display: none;">
+                    <h3>نتيجة الحساب</h3>
+                    <div class="result-amount">
+                        <span class="amount">0</span>
+                        <span class="currency">ريال</span>
+                    </div>
+                    <p class="result-note">هذا المبلغ واجب الزكاة عليك</p>
+                    <button id="pay-zakat" class="btn-zakat">
+                        <i class="fas fa-heart"></i>
+                        ادفع الزكاة الآن
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Memorization Section -->
+        <section id="memorization" class="content-section">
+            <div class="section-header">
+                <h2>متابعة الحفظ</h2>
+                <button id="new-session-btn" class="btn-primary">
+                    <i class="fas fa-plus"></i>
+                    جلسة جديدة
+                </button>
+            </div>
+
+            <div class="memorization-stats">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-number">5</div>
+                        <div class="stat-label">أجزاء محفوظة</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-number">120</div>
+                        <div class="stat-label">آية محفوظة</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-calendar"></i>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-number">45</div>
+                        <div class="stat-label">يوم متتالي</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="memorization-session">
+                <h3>جلسة المراجعة</h3>
+                <div class="session-controls">
+                    <button id="record-btn" class="btn-record">
+                        <i class="fas fa-microphone"></i>
+                        ابدأ التسجيل
+                    </button>
+                    <button id="listen-btn" class="btn-listen">
+                        <i class="fas fa-headphones"></i>
+                        استمع للتلاوة
+                    </button>
+                </div>
+
+                <div class="memorization-text" id="memorization-text">
+                    <div class="verse-to-memorize">
+                        <div class="verse-arabic">وَإِذَا قُرِئَ الْقُرْآنُ فَاسْتَمِعُوا لَهُ وَأَنصِتُوا لَعَلَّكُمْ تُرْحَمُونَ</div>
+                        <div class="verse-info">الأعراف - آية 204</div>
+                    </div>
+                </div>
+
+                <div class="tajweed-feedback" id="tajweed-feedback" style="display: none;">
+                    <h4>تقييم التجويد</h4>
+                    <div class="feedback-score">
+                        <div class="score-circle">
+                            <span class="score">85%</span>
+                        </div>
+                        <div class="score-details">
+                            <div class="score-item">
+                                <span class="score-label">النطق:</span>
+                                <span class="score-value">ممتاز</span>
+                            </div>
+                            <div class="score-item">
+                                <span class="score-label">المد:</span>
+                                <span class="score-value">جيد</span>
+                            </div>
+                            <div class="score-item">
+                                <span class="score-label">الغنة:</span>
+                                <span class="score-value">يحتاج تحسين</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="progress-tracking">
+                <h3>خطة الحفظ</h3>
+                <div class="progress-calendar">
+                    <!-- سيتم إنشاء التقويم بالجافاسكريبت -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Settings Modal -->
+    <div id="settings-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>الإعدادات</h3>
+                <button class="modal-close" id="close-settings">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="setting-group">
+                    <label>حجم الخط:</label>
+                    <input type="range" id="font-size-slider" min="14" max="24" value="18">
+                </div>
+                <div class="setting-group">
+                    <label>المذهب في حساب الصلاة:</label>
+                    <select id="calculation-method">
+                        <option value="MWL">رابطة العالم الإسلامي</option>
+                        <option value="ISNA">الجمعية الإسلامية لأمريكا الشمالية</option>
+                        <option value="Egypt">الهيئة العامة المصرية للمساحة</option>
+                        <option value="Makkah">أم القرى - مكة</option>
+                    </select>
+                </div>
+                <div class="setting-group">
+                    <label>التذكير بالصلاة:</label>
+                    <input type="checkbox" id="prayer-notifications" checked>
+                </div>
+                <div class="setting-group">
+                    <label>تشغيل الأذان:</label>
+                    <input type="checkbox" id="adhan-sound" checked>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Indicator -->
+    <div id="loading" class="loading">
+        <div class="spinner"></div>
+        <p>جاري التحميل...</p>
+    </div>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+        <div class="footer-content">
+            <div class="app-info">
+                <h3>رفيق 0.4 - المساعد الإسلامي الذكي</h3>
+                <p>تطبيق شامل للقرآن والأحاديث والأذكار مع ميزات التعلم التفاعلي</p>
+            </div>
+            <div class="developer-info">
+                <p>جميع الحقوق محفوظة © 2024</p>
+                <p class="developer-credit">
+                    <i class="fas fa-heart" style="color: #e74c3c;"></i>
+                    المطور: ليث من سوريا 
+                    <i class="fas fa-flag" style="color: #2ecc71;"></i>
+                </p>
+                <p class="quote">"إن الله يحب إذا عمل أحدكم عملاً أن يتقنه"</p>
+                <p class="blessing">جزانا الله وإياكم خير الجزاء</p>
+            </div>
+            <div class="social-links">
+                <a href="#" class="social-link">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="#" class="social-link">
+                    <i class="fab fa-telegram"></i>
+                </a>
+                <a href="#" class="social-link">
+                    <i class="fas fa-envelope"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- AR Modal -->
+    <div id="ar-modal" class="modal">
+        <div class="modal-content ar-modal-content">
+            <div class="modal-header">
+                <h3>الواقع المعزز - اتجاه القبلة</h3>
+                <button class="modal-close" id="close-ar">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="ar-instructions">
+                    <p>وجه الكاميرا نحو الأفق وسيظهر اتجاه القبلة مباشرة</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interactive Tasbih Modal -->
+    <div id="ar-tasbih-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>المسبحة التفاعلية</h3>
+                <button class="modal-close" id="close-ar-tasbih">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="ar-tasbih-container">
+                    <div class="tasbih-bead" id="ar-tasbih-bead">
+                        <div class="bead-counter">0</div>
+                        <div class="bead-text">انقر أو هز جهازك</div>
+                    </div>
+                    <div class="shake-indicator">
+                        <i class="fas fa-mobile-alt shake-icon"></i>
+                        <span>هز جهازك للتسبيح</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
